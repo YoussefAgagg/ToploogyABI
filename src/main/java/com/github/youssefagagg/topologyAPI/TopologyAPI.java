@@ -42,13 +42,13 @@ public class TopologyAPI {
 			
 			Topology topology=gson.fromJson(json, Topology.class);
 			topologiesMap.put(topology.getId(), topology);
-			result= new Result(SUCCEED, "topolgy added successfully");
-			result.setTopology(topology);
+			result= new Result(SUCCEED, "topolgy added successfully",topology);
+			
 			
 		}catch (Exception e) {
 			
-			result= new Result(FAIL, "failed to add topolgy, "+e.getMessage());
-			result.setException(e);
+			result= new Result(FAIL, "failed to add topolgy, "+e.getMessage(),e);
+			
 		}
 		return result;
 		
@@ -66,18 +66,18 @@ public class TopologyAPI {
 															 new TopologyJsonSerializDeSerializ()).create();
 			
 			Topology topology=topologiesMap.get(topologyID);
-			if(topology==null) result= new Result(FAIL, "the ID doesn't exist.");
+			if(topology==null) result= new Result(FAIL, "the ID doesn't exist.",new Exception("ID doesn't exist."));
 			else {
 			String json=gson.toJson(topology,Topology.class);
 			Files.writeString(Path.of(HOME_PATH+"/"+topology.getId()+".json"), json);
 	
-			result= new Result(SUCCEED, "topolgy added successfully");
-			result.setTopology(topology);
+			result= new Result(SUCCEED, "topolgy added successfully",topology);
+			
 			}
 			
 		}catch (Exception e) {
-			result= new Result(FAIL, "failed to add topolgy, "+e.getMessage());
-			result.setException(e);
+			result= new Result(FAIL, "failed to add topolgy, "+e.getMessage(),e);
+			
 		}
 		return result;
 	}
@@ -97,11 +97,11 @@ public class TopologyAPI {
 		Topology topology=topologiesMap.remove(topologyID);
 		Result result;
 		if(topology!=null) {
-			result= new Result(SUCCEED, "Topology deleted successfuly");
-			result.setTopology(topology);
+			result= new Result(SUCCEED, "Topology deleted successfuly",topology);
+			
 		}else {
-		 result= new Result(FAIL, "the ID doesn't exist ");
-		 result.setException(new Exception("\"the ID doesn't exist \""));
+		 result= new Result(FAIL, "the ID doesn't exist ",new Exception("\"the ID doesn't exist \""));
+		
 		}
 		
 		return result;
