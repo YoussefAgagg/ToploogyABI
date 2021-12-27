@@ -42,9 +42,9 @@ solving this task [TopologyAPI](https://drive.google.com/file/d/1aaS5tMk67M53RSl
 }
 ```
 
-# using the api
+# using
 ```
-TopologyApi topologyAPI=new TopologyApi();
+TopologyAPI topologyAPI=new TopologyAPI();
 ```
  * Read a topology from a given JSON file
  
