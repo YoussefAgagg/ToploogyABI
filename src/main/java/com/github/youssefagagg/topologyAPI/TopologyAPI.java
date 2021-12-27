@@ -26,7 +26,7 @@ public class TopologyAPI {
 
 
 	public TopologyAPI() {
-		topologiesMap=new HashMap<String, Topology>();
+		topologiesMap=new HashMap<>();
 		 gson = new GsonBuilder().registerTypeAdapter(Topology.class,
 				 new TopologyJsonSerializDeSerializ()).create();
 	}
@@ -62,7 +62,7 @@ public class TopologyAPI {
 		Result result;
 		try {
 
-			Gson gson = new GsonBuilder().registerTypeAdapter(Topology.class,
+			 gson = new GsonBuilder().registerTypeAdapter(Topology.class,
 															 new TopologyJsonSerializDeSerializ()).create();
 			
 			Topology topology=topologiesMap.get(topologyID);
@@ -86,7 +86,7 @@ public class TopologyAPI {
 	 * @return a list of Topology
 	 */
 	public List<Topology> getTopologies(){
-		return new ArrayList<Topology>(topologiesMap.values());
+		return new ArrayList<>(topologiesMap.values());
 	}
 	/*
 	 * Delete a  topology from memory 

@@ -27,10 +27,8 @@ public class Topology {
 	 * return a list of components connected to the netlistNodeID
 	 */
 	public List<Component> getComponentsWithNetlistNode(String netlisNodeID) {
-		List<Component>list=components.stream()
-									  .filter((component)->component.isConnectedgetWithNetlistNode(netlisNodeID))
-									  .collect(Collectors.toList());
-		return list;
+		return components.stream().filter(component->component.isConnectedgetWithNetlistNode(netlisNodeID))
+								  .collect(Collectors.toList());
 	}
 
 	public String getId() {

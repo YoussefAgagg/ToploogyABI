@@ -32,9 +32,7 @@ public class Component {
 	 */
 	public boolean isConnectedgetWithNetlistNode(String netlisNodeID) {
 		return netlist.values().stream()
-				.filter(value->value.equals(netlisNodeID))
-				.findAny()
-				.isPresent();
+				.anyMatch(value->value.equals(netlisNodeID));
 	}
 	public String getType() {
 		return type;

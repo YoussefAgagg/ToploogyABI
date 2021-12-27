@@ -24,68 +24,68 @@ public class TestToplogyAPI {
 	}
 	@Test
 	@Order(1)
-	public void readToplogyFromJsonFileTest() {
+	void readToplogyFromJsonFileTest() {
 		File top1=new File(TestToplogyAPI.class.getResource("top1.json").getFile());
 		File top2=new File(TestToplogyAPI.class.getResource("top2.json").getFile());
 
 		Result result=topologyAPI.readTopologyFromJsonFile(top1.getAbsolutePath());
 		Topology topology=result.getTopology();
-		assertEquals(result.getStatus(), SUCCEED);
+		assertEquals(SUCCEED, result.getStatus());
 		assertEquals("top1",topology.getId());
 		assertEquals(2,topology.getComponents().size());
 
 		result=topologyAPI.readTopologyFromJsonFile(top2.getAbsolutePath());
-		assertEquals(result.getStatus(), SUCCEED);
+		assertEquals(SUCCEED, result.getStatus());
 		topology=result.getTopology();
 		assertEquals("top2",topology.getId());
 		assertEquals(4,topology.getComponents().size());
 
 		result=topologyAPI.readTopologyFromJsonFile("not a path");
-		assertEquals(result.getStatus(), FAIL);
+		assertEquals(FAIL, result.getStatus());
 
 
 
 	}
 	@Test
 	@Order(2)
-	public void writeToplogyFromJsonFileTest() {
+	void writeToplogyFromJsonFileTest() {
 		//go to your user home directory you will find a file called top1.json
 		Result result=topologyAPI.writeTopologyToJson("top1");
 		Topology topology=result.getTopology();
-		assertEquals(result.getStatus(), SUCCEED);
+		assertEquals(SUCCEED, result.getStatus());
 		assertEquals("top1",topology.getId());
 		assertEquals(2,topology.getComponents().size());
 		
 		result=topologyAPI.writeTopologyToJson("top2");
-		assertEquals(result.getStatus(), SUCCEED);
+		assertEquals(SUCCEED, result.getStatus());
 		topology=result.getTopology();
 		assertEquals("top2",topology.getId());
 		assertEquals(4,topology.getComponents().size());
 		
 		result=topologyAPI.writeTopologyToJson("not exist");
-		assertEquals(result.getStatus(), FAIL);
+		assertEquals(FAIL, result.getStatus());
 		result=topologyAPI.writeTopologyToJson(null);
 		
-		assertEquals(result.getStatus(), FAIL);
+		assertEquals(FAIL, result.getStatus());
 
 
 	}
 	@Test
 	@Order(3)
-	public void getTopologiesTest() {
+	void getTopologiesTest() {
 		List<Topology>topologies=topologyAPI.getTopologies();
 
 		assertEquals(2,topologies.size());
 		assertEquals("top2",topologies.get(1).getId());
-		assertNotEquals(0, topologies.get(0).getComponents());
-		assertNotEquals(0, topologies.get(1).getComponents());
+		assertNotEquals(0.0, topologies.get(0).getComponents().size());
+		assertNotEquals(0.0, topologies.get(1).getComponents().size());
 
 
 
 	}
 	@Test
 	@Order(4)
-	public void getTopologyComponentsTest() {
+	void getTopologyComponentsTest() {
 		List<Component>components=topologyAPI.getTopologyComponents("top1");
 
 		assertEquals(2,components.size());
@@ -104,7 +104,7 @@ public class TestToplogyAPI {
 	}
 	@Test
 	@Order(5)
-	public void getTopologyComponentsWithNetlistNode() {
+	void getTopologyComponentsWithNetlistNode() {
 		List<Component>components=topologyAPI.getTopologyComponentsWithNetlistNode("top1", "n1");
 		assertEquals(2,components.size());
 		assertEquals("res1",components.get(0).getId());
@@ -126,19 +126,19 @@ public class TestToplogyAPI {
 	}
 	@Test
 	@Order(6)
-	public void testDeleteTopolog() {
+	void testDeleteTopolog() {
 		List<Topology>topologies=topologyAPI.getTopologies();
 
 		assertEquals(2,topologies.size());
 		Result result=topologyAPI.deleteTopology("top1");
-		assertEquals(result.getStatus(),SUCCEED);
+		assertEquals(SUCCEED,result.getStatus());
 		topologies=topologyAPI.getTopologies();
 		assertEquals(1,topologies.size());
-		assertNotEquals(0, topologies.get(0).getComponents());
+		assertNotEquals(0, topologies.get(0).getComponents().size());
 
 
 		result=topologyAPI.deleteTopology("top1");
-		assertEquals(result.getStatus(), FAIL);
+		assertEquals(FAIL, result.getStatus());
 
 
 
