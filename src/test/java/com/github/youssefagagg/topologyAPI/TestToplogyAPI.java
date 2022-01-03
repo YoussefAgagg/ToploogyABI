@@ -77,8 +77,8 @@ public class TestToplogyAPI {
 
 		assertEquals(2,topologies.size());
 		assertEquals("top2",topologies.get(1).getId());
-		assertNotEquals(0.0, topologies.get(0).getComponents().size());
-		assertNotEquals(0.0, topologies.get(1).getComponents().size());
+		assertNotEquals(0, topologies.get(0).getComponents().size());
+		assertNotEquals(0, topologies.get(1).getComponents().size());
 
 
 
