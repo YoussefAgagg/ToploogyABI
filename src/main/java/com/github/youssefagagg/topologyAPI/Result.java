@@ -15,7 +15,7 @@ public class Result {
 
 	private String message;
 	
-	private Topology topology;//null if the status is SUCCEED
+	private Topology topology;//null if the status is FAIL
 	
 	//if an exception happend it will return in the Result
 	private Exception exception;
