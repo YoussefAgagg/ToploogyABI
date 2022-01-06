@@ -27,8 +27,8 @@ public class TopologyAPI {
 
 	public TopologyAPI() {
 		topologiesMap=new HashMap<>();
-		 gson = new GsonBuilder().registerTypeAdapter(Topology.class,
-				 new TopologyJsonSerializDeSerializ()).create();
+		 gson = new GsonBuilder().registerTypeAdapter(Component.class,
+				 new ComponentJsonSerializDeserializ()).create();
 	}
 	/*
 	 * Read a topology from a given JSON file and store it in the map
@@ -61,10 +61,7 @@ public class TopologyAPI {
 	public Result writeTopologyToJson(String topologyID) {
 		Result result;
 		try {
-
-			 gson = new GsonBuilder().registerTypeAdapter(Topology.class,
-															 new TopologyJsonSerializDeSerializ()).create();
-			
+	
 			Topology topology=topologiesMap.get(topologyID);
 			if(topology==null) result= new Result(FAIL, "the ID doesn't exist.",new Exception("ID doesn't exist."));
 			else {

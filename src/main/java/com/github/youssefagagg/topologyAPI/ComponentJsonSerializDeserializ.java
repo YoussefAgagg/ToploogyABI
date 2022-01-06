@@ -1,8 +1,8 @@
 package com.github.youssefagagg.topologyAPI;
 
+
 import java.lang.reflect.Type;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -19,7 +19,7 @@ import com.google.gson.JsonSerializer;
  *    
  */
 
-public class TopologyJsonSerializDeSerializ implements JsonSerializer<Topology>, JsonDeserializer<Topology> {
+public class ComponentJsonSerializDeserializ implements JsonSerializer<Component>, JsonDeserializer<Component> {
 
 	private static final String M_1 = "m(1)";
 	private static final String NMOS = "nmos";
@@ -27,16 +27,15 @@ public class TopologyJsonSerializDeSerializ implements JsonSerializer<Topology>,
 	private static final String RESISTOR = "resistor";
 	private static final String COMPONENT_VALUES = "componentValues";
 	private static final String RESISTANCE = "resistance";
+	private static final Gson GSON=new Gson();
 
 	@Override
-	public Topology deserialize(JsonElement topologyJson, Type typeOfT, JsonDeserializationContext context)
+	public Component deserialize(JsonElement topologyJson, Type typeOfT, JsonDeserializationContext context)
 			throws JsonParseException {
-		JsonObject topologyJsonObject=topologyJson.getAsJsonObject();
-		JsonArray components=topologyJsonObject.getAsJsonArray("components");
 
-		for(JsonElement componentJsonElemnt:components) {
-			JsonObject component=componentJsonElemnt.getAsJsonObject();
+			JsonObject component=topologyJson.getAsJsonObject();
 			String componentType=component.get(TYPE).getAsString();
+			
 
 			if(componentType.equals(RESISTOR)) {
 				JsonElement componentValues=component.get(RESISTANCE);
@@ -45,21 +44,18 @@ public class TopologyJsonSerializDeSerializ implements JsonSerializer<Topology>,
 				
 			}else if(componentType.equals(NMOS)) {
 				JsonElement componentValues=component.get(M_1);
-
 				component.remove(M_1);
 				component.add(COMPONENT_VALUES, componentValues);
 			}
-		}
-		return new Gson().fromJson(topologyJsonObject, Topology.class);
+		
+		return GSON.fromJson(component, Component.class);
 	}
 
 	@Override
-	public JsonElement serialize(Topology src, Type typeOfSrc, JsonSerializationContext context) {
-		JsonObject topologyJsonObject=new Gson().toJsonTree(src).getAsJsonObject();
-		JsonArray components=topologyJsonObject.getAsJsonArray("components");
-
-		for(JsonElement componentJsonElemnt:components) {
-			JsonObject component=componentJsonElemnt.getAsJsonObject();
+	public JsonElement serialize(Component src, Type typeOfSrc, JsonSerializationContext context) {
+		
+	
+			JsonObject component=GSON.toJsonTree(src).getAsJsonObject();
 			String componentType=component.get(TYPE).getAsString();
 			JsonElement componentValues=component.get(COMPONENT_VALUES);
 			component.remove(COMPONENT_VALUES);
@@ -69,9 +65,11 @@ public class TopologyJsonSerializDeSerializ implements JsonSerializer<Topology>,
 			}else if(componentType.equals(NMOS)) {				
 				component.add(M_1, componentValues);
 			}
-		}
-		return topologyJsonObject;
+		
+		return component;
 	}
+
+
 
 
 }
